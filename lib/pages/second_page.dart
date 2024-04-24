@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/components/custom_rows.dart';
+import 'package:go_router/go_router.dart';
+
+import '../components/random_list_items.dart';
+import '../components/repetetive_list_items.dart';
 
 class SecondPage extends StatelessWidget {
   const SecondPage({super.key});
@@ -14,7 +17,7 @@ class SecondPage extends StatelessWidget {
             icon: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-              color: Colors.pinkAccent.shade100,
+              color:  Theme.of(context).floatingActionButtonTheme.backgroundColor,
                 borderRadius: BorderRadius.circular(15)
               ),
               child: Stack(
@@ -23,11 +26,11 @@ class SecondPage extends StatelessWidget {
                   Container(
                     margin:const EdgeInsets.only(left: 23),
                     padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                      color: Colors.green,
+                    decoration:  BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
                       shape: BoxShape.circle
                     ),
-                    child: const Text('3', style:TextStyle(color: Colors.white, fontSize: 14)),
+                    child:  Text('3', style:Theme.of(context).textTheme.displaySmall),
                   )
                 ],
               )
@@ -35,47 +38,47 @@ class SecondPage extends StatelessWidget {
             ),
           ),
           appBar: AppBar(
-            backgroundColor: Colors.lightBlue,
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             bottom: TabBar(
                 tabs: [
                   Tab(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             'images/fire.png',
                             width: 20,
                           ),
-                          const SizedBox(width: 10),
-                          const Text('В работе', style: TextStyle(color: Colors.white),)
+                          const SizedBox(width: 5),
+                          Text('В работе', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary))
                         ]
                     ),
                   ),Tab(
                       child:Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             'images/sandClock.png',
                             width: 20,
                           ),
-                          const SizedBox(width: 10),
-                          const Text('Ожидание', style: TextStyle(color: Colors.white))
+                          const SizedBox(width: 5),
+                          Text('Ожидание', style: TextStyle(color: Theme.of(context).colorScheme.onPrimary))
                         ]
                     ),
 
                   ),Tab(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         child: Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                            Image.asset(
                             'images/thumbs_down.png',
                           width: 20,
                          ),
-                              const SizedBox(width: 10),
-                              const Text('Отказы',style: TextStyle(color: Colors.white))
+                              const SizedBox(width: 5),
+                              Text('Отказы',style: TextStyle(color: Theme.of(context).colorScheme.onPrimary))
                         ]
                         ),
-                      ),
+
                     ),
 
                 ]
@@ -83,9 +86,30 @@ class SecondPage extends StatelessWidget {
           ),
           body: TabBarView(
                 children: [
-                 randomListItems('Габиден', detailsList, iconsList, context),
-                 repetetiveItems('Габиден',  "Новая заявка", 'images/blue_fire.png' , context),
-                 repetetiveItems('Габиден', 'Отказ', 'images/rejection.png',context),
+                 RandomListItems(
+                     name: 'Габиден',
+                     detailsList: detailsList,
+                     iconsList: iconsList,
+                   onTap:(){
+                     context.push('/thirdPage');
+                     }
+                 ),
+               RepetetiveListItems(
+                     name: 'Габиден',
+                     detail: "Новая заявка",
+                     descriptiveIcon: 'images/blue_fire.png',
+                   onTap:(){
+                     context.push('/thirdPage');
+                   }
+                 ),
+                 RepetetiveListItems(
+                     name: 'Габиден',
+                     detail:  'Отказ',
+                     descriptiveIcon: 'images/rejection.png',
+                   onTap:(){
+                     context.push('/thirdPage');
+                   }
+                 ),
              ],
             ),
         ),

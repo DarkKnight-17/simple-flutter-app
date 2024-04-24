@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:my_flutter_app/components/navigation_list_item.dart';
 
-import '../components/custom_rows.dart';
-import 'second_page.dart';
 
 class HomePage extends StatelessWidget {
    const HomePage({super.key});
 
 
-   void toSecondPage(BuildContext context){
-     Navigator.of(context).push(
-       MaterialPageRoute(
-         builder: (context) => const SecondPage()
-       )
-     );
 
-
-   }
 
   @override
 
@@ -24,7 +16,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Welcome"),
         centerTitle: true,
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
 
       ),
       body:Padding(
@@ -32,21 +24,24 @@ class HomePage extends StatelessWidget {
         child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap:() => toSecondPage(context),
-           child: customRow('Лиды', 'от заявки до подключения', Icons.local_fire_department),
+           NavigationListItem(
+              descriptiveIcon:  Icons.local_fire_department,
+              subTitle: 'от заявки до подключения',
+              title: 'Лиды',
+              onTap: () => context.pushNamed('/secondPage')
+
           ),
-         const SizedBox(height: 15),
-          customRow('Партнеры', 'их анкеты', Icons.handshake),
-         const SizedBox(height: 15),
-         customRow('Поддержка', 'заявки от клиентов', Icons.support),
-         const SizedBox(height: 40),
+          const NavigationListItem(descriptiveIcon:  Icons.handshake, subTitle: 'их анкеты', title: 'Партнеры'),
+          const NavigationListItem(descriptiveIcon:  Icons.support, subTitle: 'заявки от клиентов', title: 'Поддержка'),
+
+
+         const SizedBox(height: 30),
         Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
               width: 1,
-              color: Colors.grey,
+              color: Theme.of(context).colorScheme.tertiary,
             )
           )
           ),

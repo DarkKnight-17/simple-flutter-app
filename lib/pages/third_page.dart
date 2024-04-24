@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../components/third_page_components.dart';
+
+import '../components/comment_form.dart';
+import '../components/contact_icons.dart';
+import '../components/person_details.dart';
+
 class ThirdPage extends StatefulWidget{
   const ThirdPage({super.key});
 
@@ -12,6 +16,8 @@ class ThirdPage extends StatefulWidget{
 
 
 class ThirdPageState extends State<ThirdPage> {
+
+
   String currentDropDownValue = 'one';
   String? currentOptionalNumberOfDays;
    String? currentComment;
@@ -40,7 +46,7 @@ class ThirdPageState extends State<ThirdPage> {
      super.dispose();
    }
 
-  void changeCurrentValue(String newValue){
+  void changeCurrentDropDownValue(String newValue){
     setState(() {
       currentDropDownValue = newValue;
     });
@@ -53,34 +59,36 @@ class ThirdPageState extends State<ThirdPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       body: ListView(
         children: [
-              personDetails(),
+              PersonDetails(context: context),
               ((currentDropDownValue == 'one' || currentDropDownValue == 'two')
-                  ? contactIcons()
+                  ? ContactIcons(context: context)
                   : Container(
                 height: 40,
                    margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                   decoration: const BoxDecoration(
+                   decoration: BoxDecoration(
           
                      border: Border(
                        top: BorderSide(
-                         width: 1, color: Colors.grey
+                         width: 1, color: Theme.of(context).colorScheme.tertiary
                        ),
                        bottom: BorderSide(
-                         width: 1, color: Colors.grey
+                         width: 1, color: Theme.of(context).colorScheme.tertiary
                        )
                      )
                    ) ,
               )),
           
-              commentForms(currentDropDownValue,
-                  currentComment,
-                  commentController,
-                  changeCurrentValue,
-                  dayInputController,
+              CommentForm(
+                currentDropDownValue: currentDropDownValue,
+                 currentComment: currentComment,
+                  commentInputController: commentController,
+                  changeCurrentDropDownValue: changeCurrentDropDownValue,
+                  dayInputController: dayInputController,
+              context: context,
               ),
             ],
           ),
