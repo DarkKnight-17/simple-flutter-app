@@ -23,24 +23,27 @@ class MyApp extends StatelessWidget {
   }
 }
 
+final GoRouter _router = GoRouter(initialLocation: "/home", routes: [
+  GoRoute(
+    name: "/home",
+    path: "/home",
+    builder: (context, state) => const HomePage(),
+  ),
+  GoRoute(
+    name: "/secondPage",
+    path: "/secondPage",
+    builder: (context, state) => const SecondPage(),
+  ),
+  GoRoute(
+    name: "/thirdPage",
+    path: "/thirdPage",
+    builder: (context, state) => const ThirdPage(),
+  ),
+]);
 
-final GoRouter _router = GoRouter(
-  initialLocation: "/home",
-  routes:[
-    GoRoute(
-      name: "/home",
-      path:"/home",
-      builder: (context, state) => const HomePage(),
-    ),
-    GoRoute(
-      name: "/secondPage",
-      path:"/secondPage",
-      builder: (context, state) => const SecondPage(),
-    ),
-    GoRoute(
-      name: "/thirdPage",
-      path:"/thirdPage",
-      builder: (context, state) => const ThirdPage(),
-    ),
-  ]
-);
+
+// To-do's
+// implement GetX
+// change save button
+// handle form error cases
+// change icons in dropdown field
