@@ -14,8 +14,20 @@ ThemeData myTheme = ThemeData(
     displayMedium: TextStyle(fontSize: 15),
     displaySmall: TextStyle(color: Colors.white, fontSize: 15),
   ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
     foregroundColor: Colors.black45,
     backgroundColor: Color.fromARGB(245, 247, 125, 166),
   ),
+  // elevatedButtonTheme: ElevatedButtonThemeData(
+  //     style: ElevatedButton.styleFrom(
+  //         // here we need a way to access state variable 'buttonIsDisabled'
+
+  //         // backgroundColor: buttonIsDisabled
+  //         //     ? Colors.grey[500]
+  //         //     : Colors.blue,
+  //         foregroundColor: Colors.white,
+  //         shape: const RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.all(Radius.circular(10))),
+  //         minimumSize: const Size(100, 60))
+  //         )
 );

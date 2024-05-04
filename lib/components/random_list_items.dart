@@ -1,34 +1,34 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
-import '../pages/third_page.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:my_flutter_app/models/icons_and_details.dart';
 
 class RandomListItems extends StatelessWidget {
-  final String name;
-  final List<Widget> iconsList;
-  final List<String> detailsList;
+  final List<Application> applications;
   final void Function() onTap;
   const RandomListItems({
     super.key,
-    required this.detailsList,
-    required this.iconsList,
-    required this.name,
+    required this.applications,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(itemBuilder: (context, index) {
-      var ind = Random().nextInt(detailsList.length);
-      return ListTile(
-        onTap: onTap,
-        leading: iconsList[ind],
-        trailing: const Icon(Icons.arrow_right),
-        title: Text(name),
-        subtitle: Text(detailsList[ind]),
-      );
-    });
+    return Obx(
+      () => ListView.builder(
+        itemBuilder: (context, index) {
+          return ListTile(
+            onTap: onTap,
+            leading: const CircleAvatar(
+              backgroundColor: Colors.green,
+              child: Icon(Icons.email),
+            ),
+            trailing: const Icon(Icons.arrow_right),
+            title: Text(applications[index].personName),
+            subtitle: Text(applications[index].applicationTime.toString()),
+          );
+        },
+        itemCount: applications.length,
+      ),
+    );
   }
 }

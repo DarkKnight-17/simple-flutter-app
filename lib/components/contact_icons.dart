@@ -1,11 +1,7 @@
-
 import 'package:flutter/material.dart';
 
-
-
-
 class ContactIcons extends StatelessWidget {
- final BuildContext context;
+  final BuildContext context;
   const ContactIcons({super.key, required this.context});
 
   @override
@@ -14,16 +10,10 @@ class ContactIcons extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border(
               top: BorderSide(
-                  color: Theme.of(context).colorScheme.tertiary,
-                  width: 1
-              ),
-              bottom:BorderSide(
-                  color: Theme.of(context).colorScheme.tertiary,
-                  width: 1
-              )
-          )
-      ),
-      padding:const  EdgeInsets.only(top: 30, bottom: 30),
+                  color: Theme.of(context).colorScheme.tertiary, width: 1),
+              bottom: BorderSide(
+                  color: Theme.of(context).colorScheme.tertiary, width: 1))),
+      padding: const EdgeInsets.only(top: 30, bottom: 30),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
@@ -36,22 +26,17 @@ class ContactIcons extends StatelessWidget {
         ),
       ),
     );
-
   }
 
-
-  Widget singleContactIcon(IconData _icon){
+  Widget singleContactIcon(IconData contactIcon) {
     return Container(
-      decoration:  BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          shape: BoxShape.circle
-      ),
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
       padding: const EdgeInsets.all(5),
       child: IconButton(
-        onPressed: (){},
-        icon: Icon(_icon, size: 30),
+        onPressed: () {},
+        icon: Icon(contactIcon, size: 30),
         color: Theme.of(context).colorScheme.onPrimary,
-
       ),
     );
   }

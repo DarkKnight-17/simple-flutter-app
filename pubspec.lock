@@ -2,7 +2,7 @@
 # See https://dart.dev/tools/pub/glossary#lockfile
 packages:
   async:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: async
       sha256: "947bfcf187f74dbc5e146c9eb9c0f10c9f8b30743e341481c1e2ed3ecc18c20c"
@@ -75,11 +75,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_plugins:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   get:
     dependency: "direct main"
     description:
@@ -88,14 +83,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.6"
-  go_router:
-    dependency: "direct main"
+  intl:
+    dependency: transitive
     description:
-      name: go_router
-      sha256: "771c8feb40ad0ef639973d7ecf1b43d55ffcedb2207fd43fab030f5639e40446"
+      name: intl
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
       url: "https://pub.dev"
     source: hosted
-    version: "13.2.4"
+    version: "0.19.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -128,14 +123,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   matcher:
     dependency: transitive
     description:
@@ -168,6 +155,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  reactive_forms:
+    dependency: "direct main"
+    description:
+      name: reactive_forms
+      sha256: "10771b3b8f7df3dc6942928cc55b2abb49c0a5eb56ca8ab1ff4084b2bd968044"
+      url: "https://pub.dev"
+    source: hosted
+    version: "17.0.0"
   sky_engine:
     dependency: transitive
     description: flutter

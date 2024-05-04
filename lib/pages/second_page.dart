@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:my_flutter_app/models/icons_and_details.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:my_flutter_app/controllers/vending_machines.dart';
 
 import '../components/random_list_items.dart';
 import '../components/repetetive_list_items.dart';
 
 class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
+  SecondPage({super.key});
+
+  final controller = Get.put(ApplicationFormController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,17 @@ class SecondPage extends StatelessWidget {
           // padding: EdgeInsets.all(),
         ),
         appBar: AppBar(
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Get.toNamed('/applicationFormPage');
+                },
+                icon: Icon(
+                  Icons.add,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ))
+          ],
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           bottom: TabBar(tabs: [
             Tab(
@@ -50,11 +64,9 @@ class SecondPage extends StatelessWidget {
         body: TabBarView(
           children: [
             RandomListItems(
-                name: 'Габиден',
-                detailsList: detailsList,
-                iconsList: iconsList,
+                applications: controller.applications,
                 onTap: () {
-                  context.push('/thirdPage');
+                  Get.toNamed('/thirdPage');
                 }),
             RepetetiveListItems(
                 name: 'Габиден',
@@ -63,7 +75,7 @@ class SecondPage extends StatelessWidget {
                   child: Icon(Icons.whatshot),
                 ),
                 onTap: () {
-                  context.push('/thirdPage');
+                  Get.toNamed('/thirdPage');
                 }),
             RepetetiveListItems(
                 name: 'Габиден',
@@ -73,7 +85,7 @@ class SecondPage extends StatelessWidget {
                   child: Icon(Icons.close),
                 ),
                 onTap: () {
-                  context.push('/thirdPage');
+                  Get.toNamed('/thirdPage');
                 }),
           ],
         ),

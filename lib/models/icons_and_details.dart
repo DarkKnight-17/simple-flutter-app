@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+class Application {
+  final String personName;
+  final DateTime applicationTime = DateTime.now();
+  Application({required this.personName});
+}
+
 List<String> detailsList = [
   'Проконсультировать',
   'Отправить в Kaspi',
@@ -15,24 +21,24 @@ const List<Widget> iconsList = [
     child: Icon(Icons.whatshot),
   ),
   CircleAvatar(
+    backgroundColor: Colors.green,
     child: Icon(Icons.email),
-    backgroundColor: Colors.green,
   ),
   CircleAvatar(
-    child: Icon(Icons.timer),
     backgroundColor: Colors.grey,
+    child: Icon(Icons.timer),
   ),
   CircleAvatar(
+    backgroundColor: Colors.green,
     child: Icon(Icons.link),
-    backgroundColor: Colors.green,
   ),
   CircleAvatar(
-    child: Icon(Icons.close),
     backgroundColor: Colors.red,
+    child: Icon(Icons.close),
   ),
   CircleAvatar(
-    child: Icon(Icons.done),
     backgroundColor: Colors.green,
+    child: Icon(Icons.done),
   ),
   CircleAvatar(
     backgroundColor: Colors.grey,
