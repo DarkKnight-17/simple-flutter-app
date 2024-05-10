@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 
 import 'package:my_flutter_app/controllers/comment_form_controller.dart';
 
-import '../components/comment_form.dart';
-import '../components/contact_icons.dart';
-import '../components/person_details.dart';
+import '../common/components/comment_form.dart';
+import '../common/components/contact_icons.dart';
+import '../common/components/person_details.dart';
 
 class ThirdPage extends StatelessWidget {
   ThirdPage({super.key});

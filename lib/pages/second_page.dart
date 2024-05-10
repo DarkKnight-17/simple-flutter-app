@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:my_flutter_app/controllers/vending_machines.dart';
+import 'package:my_flutter_app/controllers/applications_controller.dart';
 
-import '../components/random_list_items.dart';
-import '../components/repetetive_list_items.dart';
+import '../common/components/application_list.dart';
+import '../common/components/repetetive_list_items.dart';
 
 class SecondPage extends StatelessWidget {
   SecondPage({super.key});
 
-  final controller = Get.put(ApplicationFormController());
+  final controller = Get.put(ApplicationsController());
 
   @override
   Widget build(BuildContext context) {
@@ -63,11 +62,7 @@ class SecondPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            RandomListItems(
-                applications: controller.applications,
-                onTap: () {
-                  Get.toNamed('/thirdPage');
-                }),
+            const ApplicationList(),
             RepetetiveListItems(
                 name: 'Габиден',
                 detail: "Новая заявка",
