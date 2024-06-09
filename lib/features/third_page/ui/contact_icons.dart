@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ContactIcons extends StatelessWidget {
-  final BuildContext context;
-  const ContactIcons({super.key, required this.context});
+  const ContactIcons({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +17,23 @@ class ContactIcons extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            singleContactIcon(Icons.phone),
-            singleContactIcon(Icons.message),
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: const Icon(
+                Icons.phone,
+                size: 30,
+              ),
+            ),
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              child: const Icon(Icons.message, size: 30),
+            ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget singleContactIcon(IconData contactIcon) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
-      padding: const EdgeInsets.all(5),
-      child: IconButton(
-        onPressed: () {},
-        icon: Icon(contactIcon, size: 30),
-        color: Theme.of(context).colorScheme.onPrimary,
       ),
     );
   }

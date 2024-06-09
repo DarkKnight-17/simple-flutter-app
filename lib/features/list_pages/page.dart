@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_flutter_app/controllers/applications_controller.dart';
 
-import '../common/components/application_list.dart';
-import '../common/components/repetetive_list_items.dart';
+import 'application_list.dart';
+import 'ui/repetetive_list_items.dart';
 
 class SecondPage extends StatelessWidget {
-  SecondPage({super.key});
-
-  final controller = Get.put(ApplicationsController());
+  const SecondPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +13,12 @@ class SecondPage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          foregroundColor:
-              Theme.of(context).floatingActionButtonTheme.foregroundColor,
           onPressed: () {},
-          backgroundColor:
-              Theme.of(context).floatingActionButtonTheme.backgroundColor,
-          child: Badge(
-            backgroundColor: Colors.green,
-            offset: const Offset(-1, 2),
+          child: const Badge(
             label: Text(
               '3',
-              style: Theme.of(context).textTheme.displaySmall,
             ),
-            child: const Icon(Icons.email, size: 40),
+            child: Icon(Icons.email, size: 40),
           ),
           // padding: EdgeInsets.all(),
         ),
@@ -37,14 +27,30 @@ class SecondPage extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
+                  Get.dialog(Card(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 150,
+                      horizontal: 50.0,
+                    ),
+                    child: Column(
+                      children: [
+                        CheckboxListTile(
+                            // title: Text(),
+                            value: false,
+                            onChanged: (newValue) {})
+                      ],
+                    ),
+                  ));
+                },
+                icon: Icon(Icons.filter_list)),
+            IconButton(
+                onPressed: () {
                   Get.toNamed('/applicationFormPage');
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.add,
-                  color: Theme.of(context).colorScheme.onPrimary,
                 ))
           ],
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           bottom: TabBar(tabs: [
             Tab(
                 child: Text('🔥 В работе',
@@ -62,7 +68,7 @@ class SecondPage extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            const ApplicationList(),
+            ApplicationList(),
             RepetetiveListItems(
                 name: 'Габиден',
                 detail: "Новая заявка",

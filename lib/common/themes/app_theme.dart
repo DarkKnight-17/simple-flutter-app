@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData myTheme = ThemeData(
   appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.blueAccent,
-  ),
+      backgroundColor: Colors.blueAccent, foregroundColor: Colors.white),
   colorScheme: ColorScheme.light(
     onPrimary: Colors.white,
     primary: Colors.blue,
@@ -15,8 +14,13 @@ ThemeData myTheme = ThemeData(
     displaySmall: TextStyle(color: Colors.white, fontSize: 15),
   ),
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    foregroundColor: Colors.black45,
-    backgroundColor: Color.fromARGB(245, 247, 125, 166),
+    foregroundColor: Color.fromARGB(136, 4, 45, 106),
+    backgroundColor: Color.fromARGB(255, 229, 191, 255),
+  ),
+  badgeTheme: const BadgeThemeData(
+    offset: Offset(-1, 2),
+    backgroundColor: Colors.green,
+    textStyle: TextStyle(fontSize: 15),
   ),
   chipTheme: ChipThemeData(
     backgroundColor: Colors.white,
@@ -33,33 +37,21 @@ ThemeData myTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.disabled)) {
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.disabled)) {
           return Colors.grey.shade400;
         }
         return Colors.blue;
       }),
-      foregroundColor: MaterialStateProperty.all(Colors.white),
-      shape: MaterialStateProperty.all(
+      foregroundColor: WidgetStateProperty.all(Colors.white),
+      shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      fixedSize: MaterialStateProperty.all(
+      fixedSize: WidgetStateProperty.all(
         const Size(double.infinity, 48),
       ),
     ),
   ),
-  // elevatedButtonTheme: ElevatedButtonThemeData(
-  //     style: ElevatedButton.styleFrom(
-  //         // here we need a way to access state variable 'buttonIsDisabled'
-
-  //         // backgroundColor: buttonIsDisabled
-  //         //     ? Colors.grey[500]
-  //         //     : Colors.blue,
-  //         foregroundColor: Colors.white,
-  //         shape: const RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.all(Radius.circular(10))),
-  //         minimumSize: const Size(100, 60))
-  //         )
 );

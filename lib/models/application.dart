@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Application {
+  final String id;
   final String companyName;
   final String personFullName;
   final String phoneNumber;
@@ -10,10 +12,11 @@ class Application {
   final String email;
   final int amountOfMachines;
   final int monthlyIncome;
-  final List<String> types;
-  final DateTime date;
+  final List types;
+  final DateTime datetime;
 
   const Application({
+    required this.id,
     required this.companyName,
     required this.amountOfMachines,
     required this.email,
@@ -24,22 +27,24 @@ class Application {
     required this.phoneNumber,
     required this.companyIdentityNumber,
     required this.companyAddress,
-    required this.date,
+    required this.datetime,
   });
 
   factory Application.fromJson(Map<String, dynamic> json) {
+    Timestamp timestamp = json['timestamp'];
     return Application(
+      id: json['id'],
       companyName: json['companyName'],
       amountOfMachines: json['amountOfMachines'],
       email: json['email'],
       monthlyIncome: json['monthlyIncome'],
       phoneNumber: json['phoneNumber'],
       kaspiPayAccount: json['kaspiPayAccount'],
-      types: json['types'] as List<String>,
+      types: json['types'],
       personFullName: json['personFullName'],
       companyIdentityNumber: json['companyIdentityNumber'],
       companyAddress: json['companyAddress'],
-      date: DateTime.parse(json['date'] ?? DateTime.now().toIso8601String()),
+      datetime: DateTime.parse(timestamp.toDate().toString()),
     );
   }
 
@@ -55,7 +60,7 @@ class Application {
       'email': email,
       'companyName': companyName,
       'monthlyIncome': monthlyIncome,
-      'date': date.toIso8601String(),
+      'timestamp': datetime,
     };
   }
 }

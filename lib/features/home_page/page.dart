@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_flutter_app/common/components/navigation_list_item.dart';
+import 'package:my_flutter_app/features/home_page/ui/drawer_for_homepage.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final User user = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -14,24 +17,25 @@ class HomePage extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         ),
+        drawer: MyDrawer(user: user),
         body: Padding(
           padding: const EdgeInsets.only(top: 15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              NavigationListItem(
-                  descriptiveIcon: Icons.local_fire_department,
-                  subTitle: 'от заявки до подключения',
-                  title: 'Лиды',
+              ListTile(
+                  leading: const Icon(Icons.local_fire_department),
+                  subtitle: const Text('от заявки до подключения'),
+                  title: const Text('Лиды'),
                   onTap: () => Get.toNamed('/secondPage')),
-              const NavigationListItem(
-                  descriptiveIcon: Icons.handshake,
-                  subTitle: 'их анкеты',
-                  title: 'Партнеры'),
-              const NavigationListItem(
-                  descriptiveIcon: Icons.support,
-                  subTitle: 'заявки от клиентов',
-                  title: 'Поддержка'),
+              const ListTile(
+                  leading: Icon(Icons.handshake),
+                  subtitle: Text('их анкеты'),
+                  title: Text('Партнеры')),
+              const ListTile(
+                  leading: Icon(Icons.support),
+                  subtitle: Text('заявки от клиентов'),
+                  title: Text('Поддержка')),
               const SizedBox(height: 30),
               Container(
                 decoration: BoxDecoration(

@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:my_flutter_app/common/components/list_spaced.dart';
+import 'package:my_flutter_app/models/application.dart';
+import 'package:my_flutter_app/features/application_form_page/ui/list_spaced.dart';
+import 'package:my_flutter_app/features/application_form_page/validations/validate_identity.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class ApplicationFormPage extends StatelessWidget {
   final Function(Map<String, dynamic>) add;
-  const ApplicationFormPage(this.add, {super.key});
+  final Function(String, Map<String, dynamic>) edit;
+
+  ApplicationFormPage(this.add, this.edit, {super.key});
+
+  bool inEditingStage = false;
+  Application? oldData;
 
   @override
   Widget build(BuildContext context) {
+    bool argumentsPassed = Get.arguments != null;
+    if (argumentsPassed) {
+      inEditingStage = Get.arguments['inEditingMode'];
+      oldData = Get.arguments['doc'];
+    }
+    print(oldData?.types);
+
     final amount = FormControl<int>(value: 20, validators: [
       Validators.required,
     ]);
@@ -26,44 +41,95 @@ class ApplicationFormPage extends StatelessWidget {
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       body: ReactiveForm(
-        formGroup: FormGroup({
-          'companyName': FormControl<String>(validators: [Validators.required]),
-          'companyIdentityNumber': FormControl<int>(validators: [
-            Validators.required,
-          ]),
-          'phoneNumber': FormControl<int>(validators: [
-            Validators.required,
-          ]),
-          'kaspiPayAccount':
-              FormControl<String>(validators: [Validators.required]),
-          'companyAddress':
-              FormControl<String>(validators: [Validators.required]),
-          'email': FormControl<String>(
-              validators: [Validators.required, Validators.email]),
-          'personFullName':
-              FormControl<String>(validators: [Validators.required]),
-          'amountOfMachines': amount,
-          'monthlyIncome': income,
-          'types': FormArray<String>([], validators: [Validators.minLength(1)]),
-        }),
+        formGroup: inEditingStage
+            ? FormGroup({
+                'companyName': FormControl<String>(
+                    value: oldData!.companyName,
+                    validators: [Validators.required]),
+                'companyIdentityNumber': FormControl<String>(
+                    value: oldData!.companyIdentityNumber,
+                    validators: [
+                      Validators.required,
+                      Validators.delegate(validateIdentity)
+                    ]),
+                'phoneNumber': FormControl<String>(
+                    value: oldData!.phoneNumber,
+                    validators: [
+                      Validators.required,
+                    ]),
+                'kaspiPayAccount': FormControl<String>(
+                    value: oldData!.kaspiPayAccount,
+                    validators: [Validators.required]),
+                'companyAddress': FormControl<String>(
+                    value: oldData!.companyAddress,
+                    validators: [Validators.required]),
+                'email': FormControl<String>(
+                    value: oldData!.email,
+                    validators: [Validators.required, Validators.email]),
+                'personFullName': FormControl<String>(
+                    value: oldData!.personFullName,
+                    validators: [Validators.required]),
+                'amountOfMachines': amount,
+                'monthlyIncome': income,
+                'types': FormArray<String>(
+                    List.from(oldData!.types
+                        .map((e) => FormControl<String>(value: e))),
+                    validators: [Validators.minLength(1)]),
+              })
+            : FormGroup({
+                'companyName':
+                    FormControl<String>(validators: [Validators.required]),
+                'companyIdentityNumber': FormControl<String>(validators: [
+                  Validators.required,
+                  Validators.delegate(validateIdentity)
+                ]),
+                'phoneNumber': FormControl<String>(validators: [
+                  Validators.required,
+                ]),
+                'kaspiPayAccount':
+                    FormControl<String>(validators: [Validators.required]),
+                'companyAddress':
+                    FormControl<String>(validators: [Validators.required]),
+                'email': FormControl<String>(
+                    validators: [Validators.required, Validators.email]),
+                'personFullName':
+                    FormControl<String>(validators: [Validators.required]),
+                'amountOfMachines': amount,
+                'monthlyIncome': income,
+                'types': FormArray<String>([],
+                    validators: [Validators.minLength(1)]),
+              }),
         child: ListViewSpaced(children: [
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('1. Анкета будет отправлена в Kaspi Bank'),
-              Text.rich(TextSpan(children: [
-                TextSpan(text: '2. Анкета рассматривается '),
-                TextSpan(
-                    text: 'банком',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline)),
-                TextSpan(text: ' 1-2 рабочих дня'),
-              ])),
-              Text('3. После подключения мы свяжемся с Вами')
-            ],
-          ),
+          !inEditingStage
+              ? const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('1. Анкета будет отправлена в Kaspi Bank'),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text.rich(TextSpan(children: [
+                      TextSpan(text: '2. Анкета рассматривается '),
+                      TextSpan(
+                          text: 'банком',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline)),
+                      TextSpan(text: ' 1-2 рабочих дня'),
+                    ])),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text('3. После подключения мы свяжемся с Вами'),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Divider(
+                      height: 0.5,
+                    )
+                  ],
+                )
+              : Container(),
           ReactiveTextField(
             validationMessages: {
               ValidationMessage.required: (_) => 'Это обязательное поле',
@@ -81,7 +147,7 @@ class ApplicationFormPage extends StatelessWidget {
               helperText: 'Образец: ИП Ахметов А.А',
             ),
           ),
-          ReactiveTextField<int>(
+          ReactiveTextField<String>(
             keyboardType: TextInputType.number,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
@@ -91,6 +157,8 @@ class ApplicationFormPage extends StatelessWidget {
             formControlName: 'companyIdentityNumber',
             validationMessages: {
               ValidationMessage.required: (_) => 'Это обязательное поле',
+              'numberIsIncorrect': (_) => 'Неправильный номер',
+              'notEnoughDigits': (_) => 'Недостаточно цифр'
             },
             decoration: InputDecoration(
               helperStyle:
@@ -178,13 +246,13 @@ class ApplicationFormPage extends StatelessWidget {
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
               MaskTextInputFormatter(
-                  mask: '(###) ###-##-##', filter: {'#': RegExp(r'[0-9]')})
+                  mask: '+* (###) ###-##-##',
+                  filter: {'#': RegExp(r'[0-9]'), '*': RegExp(r'[7]')})
             ],
             validationMessages: {
               ValidationMessage.required: (_) => 'Это обязательное поле',
             },
             decoration: InputDecoration(
-              prefixText: '+7 ',
               helperStyle:
                   TextStyle(color: Theme.of(context).colorScheme.tertiary),
               border:
@@ -220,8 +288,9 @@ class ApplicationFormPage extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: IconButton(
                 onPressed: () {
-                  print(amount.value);
-                  amount.value = amount.value! - 5;
+                  if (amount.value! > 5) {
+                    amount.value = amount.value! - 5;
+                  }
                 },
                 icon: const Icon(Icons.remove_circle_outline),
               ),
@@ -274,9 +343,16 @@ class ApplicationFormPage extends StatelessWidget {
             ),
           ),
           ReactiveFormConsumer(builder: (context, form, child) {
-            // print(form.value);
             return ElevatedButton(
-              onPressed: form.valid ? () => add(form.value) : null,
+              onPressed: form.valid
+                  ? () {
+                      if (inEditingStage) {
+                        edit(oldData!.id.toString(), form.value);
+                      } else {
+                        add(form.value);
+                      }
+                    }
+                  : null,
               child: const Text('Отправить'),
             );
           }),
